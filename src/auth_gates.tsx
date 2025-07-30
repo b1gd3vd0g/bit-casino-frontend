@@ -11,6 +11,6 @@ export function RequireAuth() {
 export function RequireNoAuth() {
   const location = useLocation();
   const token = sessionStorage.getItem('token');
-  if (!token) return <Navigate to='/' replace state={{ from: location }} />;
+  if (token) return <Navigate to='/' replace state={{ from: location }} />;
   return <Outlet />;
 }
