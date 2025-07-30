@@ -4,7 +4,7 @@ import WelcomePage from './pages/welcome_page';
 import HomePage from './pages/home_page';
 import { RequireAuth, RequireNoAuth } from './auth_gates';
 
-function App() {
+export default function App() {
   return (
     <div className='min-h-screen bg-gray-400 font-[vt323]'>
       <BrowserRouter>
@@ -24,5 +24,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
