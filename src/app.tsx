@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import WelcomePage from './pages/welcome_page';
 import HomePage from './pages/home_page';
 import { RequireAuth, RequireNoAuth } from './auth_gates';
+import { homeLoader } from './loaders';
 
 export default function App() {
   return (
@@ -16,7 +17,7 @@ export default function App() {
             </Route>
             {/* These paths are blocked behind token authentication. */}
             <Route element={<RequireAuth />}>
-              <Route index element={<HomePage />} />
+              <Route index element={<HomePage />} loader={homeLoader} />
             </Route>
           </Routes>
         </main>
