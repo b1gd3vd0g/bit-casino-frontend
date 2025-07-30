@@ -46,6 +46,7 @@ function RegisterForm({ setter }: ChoiceFormProps) {
       case 201: {
         const { token } = registration.body as TokenResponse;
         console.log(token);
+        sessionStorage.setItem('token', token);
         break;
       }
       default: {
@@ -82,6 +83,7 @@ function LoginForm({ setter }: ChoiceFormProps) {
       case 200: {
         const { token } = login.body as TokenResponse;
         console.log(token);
+        sessionStorage.setItem('token', token);
         break;
       }
       default: {
