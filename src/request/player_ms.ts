@@ -12,3 +12,15 @@ export async function attemptPlayerRegistration(
   const body = await response.json();
   return { status: response.status, body };
 }
+
+export async function attemptPlayerLogin(
+  username: string,
+  password: string
+): Promise<ApiResponse<TokenResponse>> {
+  const response = await fetch('http://player-ms:3000/authn', {
+    method: 'POST',
+    body: JSON.stringify({ username, password })
+  });
+  const body = await response.json();
+  return { status: response.status, body };
+}
