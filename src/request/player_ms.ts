@@ -1,11 +1,13 @@
 import type { ApiResponse, TokenResponse } from './api_response';
 
+const api_base = 'http://localhost:60000/player';
+
 export async function attemptPlayerRegistration(
   username: string,
   email: string,
   password: string
 ): Promise<ApiResponse<TokenResponse>> {
-  const response = await fetch('/player', {
+  const response = await fetch(api_base, {
     method: 'POST',
     body: JSON.stringify({ username, email, password })
   });
@@ -17,7 +19,7 @@ export async function attemptPlayerLogin(
   username: string,
   password: string
 ): Promise<ApiResponse<TokenResponse>> {
-  const response = await fetch('/player/authn', {
+  const response = await fetch(`${api_base}/authn`, {
     method: 'POST',
     body: JSON.stringify({ username, password })
   });
