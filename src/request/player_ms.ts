@@ -1,4 +1,8 @@
-import type { ApiResponse, TokenResponse } from './api_response';
+import type {
+  ApiResponse,
+  PlayerResponse,
+  TokenResponse
+} from './api_response';
 
 const api_base = '/player/';
 
@@ -28,6 +32,19 @@ export async function attemptPlayerLogin(
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ username, password })
+  });
+  const body = await response.json();
+  return { status: response.status, body };
+}
+
+export async function attemptTokenAuthentication(
+  token: string
+): Promise<ApiResponse<PlayerResponse>> {
+  const response = await fetch(`${api_base}authn`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
   });
   const body = await response.json();
   return { status: response.status, body };

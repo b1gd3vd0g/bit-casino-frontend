@@ -3,5 +3,12 @@ export type ApiResponse<T> = {
   body?: T | MessageResponse;
 };
 
+export type PlayerResponse = {
+  id: string;
+  email: string;
+  username: string;
+  created_at: string;
+};
+
 export type TokenResponse = { token: string };
 export type MessageResponse = { message: string };
