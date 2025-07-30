@@ -5,6 +5,7 @@ import {
   attemptPlayerRegistration
 } from '../request/player_ms';
 import type { MessageResponse, TokenResponse } from '../request/api_response';
+import { useNavigate } from 'react-router-dom';
 
 type UserChoice = 'undecided' | 'login' | 'register';
 
@@ -35,6 +36,8 @@ function RegisterForm({ setter }: ChoiceFormProps) {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
+  const navigate = useNavigate();
+
   async function submitForm(): Promise<void> {
     const registration = await attemptPlayerRegistration(
       username,
@@ -47,6 +50,7 @@ function RegisterForm({ setter }: ChoiceFormProps) {
         const { token } = registration.body as TokenResponse;
         console.log(token);
         sessionStorage.setItem('token', token);
+        navigate('/');
         break;
       }
       default: {
@@ -77,6 +81,8 @@ function LoginForm({ setter }: ChoiceFormProps) {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
+  const navigate = useNavigate();
+
   async function submitForm(): Promise<void> {
     const login = await attemptPlayerLogin(username, password);
     switch (login.status) {
@@ -84,6 +90,7 @@ function LoginForm({ setter }: ChoiceFormProps) {
         const { token } = login.body as TokenResponse;
         console.log(token);
         sessionStorage.setItem('token', token);
+        navigate('/');
         break;
       }
       default: {
