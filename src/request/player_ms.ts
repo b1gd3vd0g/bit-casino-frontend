@@ -5,7 +5,7 @@ export async function attemptPlayerRegistration(
   email: string,
   password: string
 ): Promise<ApiResponse<TokenResponse>> {
-  const response = await fetch('http://player-ms:3000', {
+  const response = await fetch('/player', {
     method: 'POST',
     body: JSON.stringify({ username, email, password })
   });
@@ -17,7 +17,7 @@ export async function attemptPlayerLogin(
   username: string,
   password: string
 ): Promise<ApiResponse<TokenResponse>> {
-  const response = await fetch('http://player-ms:3000/authn', {
+  const response = await fetch('/player/authn', {
     method: 'POST',
     body: JSON.stringify({ username, password })
   });
