@@ -9,6 +9,9 @@ export async function attemptPlayerRegistration(
 ): Promise<ApiResponse<TokenResponse>> {
   const response = await fetch(api_base, {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify({ username, email, password })
   });
   const body = await response.json();
@@ -21,6 +24,9 @@ export async function attemptPlayerLogin(
 ): Promise<ApiResponse<TokenResponse>> {
   const response = await fetch(`${api_base}authn`, {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify({ username, password })
   });
   const body = await response.json();
