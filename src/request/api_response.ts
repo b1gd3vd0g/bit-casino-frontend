@@ -12,3 +12,7 @@ export type PlayerResponse = {
 
 export type TokenResponse = { token: string };
 export type MessageResponse = { message: string };
+export type BalanceResponse = { balance: number };
+export type StreakResponse = { streak: number };
+
+export type BonusResponse = { available: boolean; streak: number };
