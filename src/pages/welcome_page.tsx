@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FormGroup } from '../reusable/form';
 import {
   attemptPlayerLogin,
@@ -36,6 +36,23 @@ function RegisterForm({ setter }: ChoiceFormProps) {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
+  const usernameRef = useRef<HTMLInputElement | HTMLTextAreaElement>(
+    new HTMLInputElement()
+  );
+  const emailRef = useRef<HTMLInputElement | HTMLTextAreaElement>(
+    new HTMLInputElement()
+  );
+  const passwordRef = useRef<HTMLInputElement | HTMLTextAreaElement>(
+    new HTMLInputElement()
+  );
+
+  useEffect(() => {
+    console.log('Running useEffect in Register form');
+    setUsername(usernameRef.current.value);
+    setEmail(emailRef.current.value);
+    setPassword(passwordRef.current.value);
+  }, []);
+
   const navigate = useNavigate();
 
   async function submitForm(): Promise<void> {
@@ -64,9 +81,18 @@ function RegisterForm({ setter }: ChoiceFormProps) {
     <>
       <BackButton setter={setter} />
       <h2>Create a new account:</h2>
-      <FormGroup label='Username' setter={setUsername} />
-      <FormGroup label='Email address' setter={setEmail} />
-      <FormGroup label='Password' type='password' setter={setPassword} />
+      <FormGroup
+        label='Username'
+        setter={setUsername}
+        reference={usernameRef}
+      />
+      <FormGroup label='Email address' setter={setEmail} reference={emailRef} />
+      <FormGroup
+        label='Password'
+        type='password'
+        setter={setPassword}
+        reference={passwordRef}
+      />
       <button
         className='block m-auto my-2 bg-gray-500 w-fit text-3xl px-4 py-2 rounded-xl'
         onClick={submitForm}
@@ -80,6 +106,19 @@ function RegisterForm({ setter }: ChoiceFormProps) {
 function LoginForm({ setter }: ChoiceFormProps) {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+
+  const usernameRef = useRef<HTMLInputElement | HTMLTextAreaElement>(
+    new HTMLInputElement()
+  );
+  const passwordRef = useRef<HTMLInputElement | HTMLTextAreaElement>(
+    new HTMLInputElement()
+  );
+
+  useEffect(() => {
+    console.log('Running useEffect in login form');
+    setUsername(usernameRef.current.value);
+    setPassword(passwordRef.current.value);
+  }, []);
 
   const navigate = useNavigate();
 
@@ -104,8 +143,17 @@ function LoginForm({ setter }: ChoiceFormProps) {
     <>
       <BackButton setter={setter} />
       <h2>Log into your account:</h2>
-      <FormGroup label='Username' setter={setUsername} />
-      <FormGroup label='Password' type='password' setter={setPassword} />
+      <FormGroup
+        label='Username'
+        setter={setUsername}
+        reference={usernameRef}
+      />
+      <FormGroup
+        label='Password'
+        type='password'
+        setter={setPassword}
+        reference={passwordRef}
+      />
       <button
         className='block m-auto my-2 bg-gray-500 w-fit text-3xl px-4 py-2 rounded-xl'
         onClick={submitForm}
