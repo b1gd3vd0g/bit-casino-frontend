@@ -40,12 +40,17 @@ function RegisterForm({ setter }: ChoiceFormProps) {
   const emailRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
   const passwordRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
+  // useEffect(() => {
+  //   usernameRef.current?.blur();
+  //   emailRef.current?.blur();
+  //   passwordRef.current?.blur();
+  // }, []);
+
   const navigate = useNavigate();
 
   async function submitForm(): Promise<void> {
-    usernameRef.current?.focus();
-    emailRef.current?.focus();
-    passwordRef.current?.focus();
+    usernameRef.current?.blur();
+    emailRef.current?.blur();
     passwordRef.current?.blur();
 
     console.log(`${username} ${email} ${password}`);
@@ -103,9 +108,16 @@ function LoginForm({ setter }: ChoiceFormProps) {
   const usernameRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
   const passwordRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
+  // useEffect(() => {
+  //   usernameRef.current?.blur();
+  //   passwordRef.current?.blur();
+  // }, []);
+
   const navigate = useNavigate();
 
   async function submitForm(): Promise<void> {
+    usernameRef.current?.blur();
+    passwordRef.current?.blur();
     const login = await attemptPlayerLogin(username, password);
     switch (login.status) {
       case 200: {
