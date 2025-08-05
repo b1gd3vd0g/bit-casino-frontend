@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { FormGroup } from '../reusable/form';
 import {
   attemptPlayerLogin,
@@ -40,16 +40,15 @@ function RegisterForm({ setter }: ChoiceFormProps) {
   const emailRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
   const passwordRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
-  useEffect(() => {
-    console.log('Running useEffect in Register form');
-    setUsername(usernameRef.current?.value || '');
-    setEmail(usernameRef.current?.value || '');
-    setPassword(usernameRef.current?.value || '');
-  }, []);
-
   const navigate = useNavigate();
 
   async function submitForm(): Promise<void> {
+    usernameRef.current?.focus();
+    emailRef.current?.focus();
+    passwordRef.current?.focus();
+    passwordRef.current?.blur();
+
+    console.log(`${username} ${email} ${password}`);
     const registration = await attemptPlayerRegistration(
       username,
       email,
@@ -103,12 +102,6 @@ function LoginForm({ setter }: ChoiceFormProps) {
 
   const usernameRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
   const passwordRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    console.log('Running useEffect in login form');
-    setUsername(usernameRef.current?.value || '');
-    setPassword(passwordRef.current?.value || '');
-  }, []);
 
   const navigate = useNavigate();
 
