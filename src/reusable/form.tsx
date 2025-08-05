@@ -18,7 +18,8 @@ export function FormGroup({
   type = 'text',
   setter,
   formatter = (s) => s,
-  validator = (s) => (s ? true : false)
+  validator = (s) => (s ? true : false),
+  reference
 }: FormGroupProps) {
   const id = label.toLowerCase().replace(/\W/g, '-');
 
@@ -62,6 +63,7 @@ export function FormGroup({
       onBlur={validateInput}
       onChange={formatInput}
       rows={rows}
+      ref={reference as React.RefObject<HTMLTextAreaElement>}
     ></textarea>
   );
 
@@ -74,6 +76,7 @@ export function FormGroup({
       className={`${BORDER_CLASSES[border]} w-[400px]`}
       onBlur={validateInput}
       onChange={formatInput}
+      ref={reference as React.RefObject<HTMLInputElement>}
     />
   );
 
