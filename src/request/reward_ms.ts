@@ -6,7 +6,7 @@ import type {
 
 const api_base = '/reward/';
 
-export async function checkDailyBonus(
+export async function attemptCheckDailyBonus(
   token: string
 ): Promise<ApiResponse<BonusResponse>> {
   const response = await fetch(api_base, {
@@ -18,7 +18,7 @@ export async function checkDailyBonus(
   return { status: response.status, body };
 }
 
-export async function claimDailyBonus(
+export async function attemptClaimDailyBonus(
   token: string
 ): Promise<ApiResponse<StreakResponse>> {
   const response = await fetch(api_base, {
