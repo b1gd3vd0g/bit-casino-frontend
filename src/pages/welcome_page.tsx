@@ -36,21 +36,15 @@ function RegisterForm({ setter }: ChoiceFormProps) {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const usernameRef = useRef<HTMLInputElement | HTMLTextAreaElement>(
-    new HTMLInputElement()
-  );
-  const emailRef = useRef<HTMLInputElement | HTMLTextAreaElement>(
-    new HTMLInputElement()
-  );
-  const passwordRef = useRef<HTMLInputElement | HTMLTextAreaElement>(
-    new HTMLInputElement()
-  );
+  const usernameRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
+  const emailRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
+  const passwordRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
   useEffect(() => {
     console.log('Running useEffect in Register form');
-    setUsername(usernameRef.current.value);
-    setEmail(emailRef.current.value);
-    setPassword(passwordRef.current.value);
+    setUsername(usernameRef.current?.value || '');
+    setEmail(emailRef.current?.value || '');
+    setPassword(passwordRef.current?.value || '');
   }, []);
 
   const navigate = useNavigate();

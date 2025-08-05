@@ -8,7 +8,7 @@ type FormGroupProps = {
   setter: React.Dispatch<React.SetStateAction<string>>;
   formatter?: (s: string) => string;
   validator?: (s: string) => boolean;
-  reference: React.RefObject<HTMLInputElement | HTMLTextAreaElement>;
+  reference: React.RefObject<HTMLInputElement | HTMLTextAreaElement | null>;
 };
 
 export function FormGroup({
