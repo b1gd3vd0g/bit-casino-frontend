@@ -25,6 +25,8 @@ export async function homeLoader(): Promise<HomeInfo> {
     attemptCheckDailyBonus(token)
   ]);
 
+  console.log(promises);
+
   promises.forEach((response) => {
     if (response.status !== 200) {
       console.log(promises);
