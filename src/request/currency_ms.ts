@@ -7,7 +7,8 @@ export async function attemptFetchPlayerBalance(
 ): Promise<ApiResponse<BalanceResponse>> {
   const response = await fetch(api_base, {
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
     }
   });
   const body = await response.json();

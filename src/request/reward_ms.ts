@@ -11,7 +11,8 @@ export async function attemptCheckDailyBonus(
 ): Promise<ApiResponse<BonusResponse>> {
   const response = await fetch(api_base, {
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
     }
   });
   const body = await response.json();
@@ -24,7 +25,8 @@ export async function attemptClaimDailyBonus(
   const response = await fetch(api_base, {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
     }
   });
   const body = await response.json();
