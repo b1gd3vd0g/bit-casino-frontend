@@ -75,6 +75,8 @@ function RegisterForm({ setter }: ChoiceFormProps) {
     }
   }
 
+  const active = username && password && email;
+
   return (
     <>
       <BackButton setter={setter} />
@@ -92,8 +94,11 @@ function RegisterForm({ setter }: ChoiceFormProps) {
         reference={passwordRef}
       />
       <button
-        className='block m-auto my-2 bg-gray-500 w-fit text-3xl px-4 py-2 rounded-xl'
+        className={`${
+          active ? 'bg-gray-500' : 'bg-gray-300'
+        } block m-auto my-2 bg-gray-500 w-fit text-3xl px-4 py-2 rounded-xl`}
         onClick={submitForm}
+        disabled={!active}
       >
         Submit
       </button>
@@ -134,6 +139,7 @@ function LoginForm({ setter }: ChoiceFormProps) {
     }
   }
 
+  const active = username && password;
   return (
     <>
       <BackButton setter={setter} />
@@ -150,8 +156,11 @@ function LoginForm({ setter }: ChoiceFormProps) {
         reference={passwordRef}
       />
       <button
-        className='block m-auto my-2 bg-gray-500 w-fit text-3xl px-4 py-2 rounded-xl'
+        className={`${
+          active ? 'bg-gray-500' : 'bg-gray-300'
+        } block m-auto my-2 bg-gray-500 w-fit text-3xl px-4 py-2 rounded-xl`}
         onClick={submitForm}
+        disabled={!active}
       >
         Submit
       </button>
