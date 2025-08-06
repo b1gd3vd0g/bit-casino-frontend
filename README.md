@@ -1,6 +1,12 @@
 # Bit Casino -- Frontend
 
-A React application written in TypeScript serving as the frontend for Bit Casino - a virtual gambling simulator.
+A **React** application written in **TypeScript** serving as the frontend for **Bit Casino** - a virtual gambling simulator. The app is containerized using **Docker**.
+
+### How to use this repository
+
+This repository alone can't give you the full Bit Casino experience.
+
+Visit the [bit-casino-infra](https://github.com/b1gd3vd0g/bit-casino-infra) repository and follow the instructions there to run the fully integrated application locally using Docker Compose.
 
 ### Related Repositories
 
