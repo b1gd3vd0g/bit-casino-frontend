@@ -22,7 +22,7 @@ export async function attemptCheckDailyBonus(
 export async function attemptClaimDailyBonus(
   token: string
 ): Promise<ApiResponse<StreakResponse>> {
-  const response = await fetch(`${api_base}/`, {
+  const response = await fetch(`${api_base}/daily`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
