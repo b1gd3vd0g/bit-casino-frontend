@@ -21,12 +21,12 @@ export function MenuButton({
 }: ButtonProps): React.ReactElement {
   const playSfx = useSound(chips1);
 
-  const mx = center ? 'auto' : '2';
+  const mx = center ? 'mx-auto' : 'mx-2';
   const colorChoices = disabled ? 'brightness-50' : 'hover:border-fuchsia-500';
 
   return (
     <button
-      className={`block border-1 text-2xl py-2 px-5 my-2 mx-${mx} ${colorChoices}`}
+      className={`block border-1 text-2xl py-2 px-5 my-2 ${mx} ${colorChoices}`}
       onClick={() => {
         onClick();
         playSfx();
