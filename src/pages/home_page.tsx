@@ -15,8 +15,8 @@ export default function HomePage() {
   const claimDailyBonus = async () => {
     const token = sessionStorage.getItem('token') ?? '';
     const claim = await attemptClaimDailyBonus(token);
-    if (claim.status === 200) {
-      throw new Error('could not claim the daily bonus.');
+    if (claim.status !== 200) {
+      return;
     }
     const newBal = await attemptFetchPlayerBalance(token);
     setBalance((newBal.body as BalanceResponse).balance);
@@ -32,7 +32,11 @@ export default function HomePage() {
       <h2>Current Balance: {balance}</h2>
       <h3>Daily bonus is {bonus.available ? 'available' : 'unavailable'}</h3>
       <h4>Current streak is {bonus.streak}</h4>
-      <button className='bg-amber-100' onClick={claimDailyBonus}>
+      <button
+        disabled={!bonus.available}
+        className='bg-amber-100'
+        onClick={claimDailyBonus}
+      >
         Claim Daily Bonus
       </button>
     </>
