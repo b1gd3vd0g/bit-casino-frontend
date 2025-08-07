@@ -6,9 +6,16 @@ import {
 } from '../request/player_ms';
 import type { MessageResponse, TokenResponse } from '../request/api_response';
 import { useNavigate } from 'react-router-dom';
+import TypingText from '../reusable/text';
+import { BackButton, MenuButton } from '../reusable/buttons';
 
 type UserChoice = 'undecided' | 'login' | 'register';
 
+/**
+ * This is the page that all unauthenticated users will be directed to upon
+ * visiting Bit Casino. It will display one of three forms: the ChoiceForm,
+ * the RegisterForm, or the LoginForm, based on the user's choices.
+ */
 export default function WelcomePage() {
   const [choice, setChoice] = useState<UserChoice>('undecided');
   let form;
@@ -25,13 +32,96 @@ export default function WelcomePage() {
   }
   return (
     <div>
-      <h1>Welcome to Bit Casino!</h1>
-      <div className='bg-gray-200 w-[750px] max-w-9/10 m-auto p-2'>{form}</div>
+      <TypingText text='Welcome to Bit Casino!' cps={10} />
+      <div className='w-[750px] max-w-9/10 m-auto p-2 border-emerald-400 border-2'>
+        {form}
+      </div>
     </div>
   );
 }
 
-function RegisterForm({ setter }: ChoiceFormProps) {
+type WelcomeFormProps = {
+  /**
+   * This is the setter for the state variable "choice", allowing the user to
+   * decide if they want to login or register.
+   */
+  setter: React.Dispatch<React.SetStateAction<UserChoice>>;
+};
+
+/**
+ * Present two buttons to the user, allowing them to log in or to create a new
+ * account.
+ */
+function ChoiceForm({ setter }: WelcomeFormProps) {
+  return (
+    <div className='flex flex-col items-center'>
+      <MenuButton text='Log in' onClick={() => setter('login')} />
+      <MenuButton text='Create account' onClick={() => setter('register')} />
+    </div>
+  );
+}
+
+/**
+ * Present a login form to the user, which will call upon the player
+ * microservice to authenticate the username and password. Upon successful
+ * authentication, it will redirect the user to the home page (/).
+ */
+function LoginForm({ setter }: WelcomeFormProps) {
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
+  const usernameRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
+  const passwordRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
+
+  const navigate = useNavigate();
+
+  async function submitForm(): Promise<void> {
+    const login = await attemptPlayerLogin(username, password);
+    switch (login.status) {
+      case 200: {
+        const { token } = login.body as TokenResponse;
+        console.log(token);
+        sessionStorage.setItem('token', token);
+        navigate('/');
+        break;
+      }
+      default: {
+        const { message } = login.body as MessageResponse;
+        console.log(message);
+      }
+    }
+  }
+
+  return (
+    <>
+      <BackButton onClick={() => setter('undecided')} />
+      <h2>Log into your account:</h2>
+      <FormGroup
+        label='Username'
+        setter={setUsername}
+        reference={usernameRef}
+      />
+      <FormGroup
+        label='Password'
+        type='password'
+        setter={setPassword}
+        reference={passwordRef}
+      />
+      <MenuButton
+        text='Submit'
+        onClick={submitForm}
+        disabled={!(username && password)}
+      />
+    </>
+  );
+}
+
+/**
+ * Present a registration form to the user, which will call upon the player
+ * microservice to create a new player account. Upon successful account
+ * creation, it will redirect the user to the home page (/).
+ */
+function RegisterForm({ setter }: WelcomeFormProps) {
   const [username, setUsername] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -40,20 +130,9 @@ function RegisterForm({ setter }: ChoiceFormProps) {
   const emailRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
   const passwordRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
-  // useEffect(() => {
-  //   usernameRef.current?.blur();
-  //   emailRef.current?.blur();
-  //   passwordRef.current?.blur();
-  // }, []);
-
   const navigate = useNavigate();
 
   async function submitForm(): Promise<void> {
-    usernameRef.current?.blur();
-    emailRef.current?.blur();
-    passwordRef.current?.blur();
-
-    console.log(`${username} ${email} ${password}`);
     const registration = await attemptPlayerRegistration(
       username,
       email,
@@ -75,11 +154,9 @@ function RegisterForm({ setter }: ChoiceFormProps) {
     }
   }
 
-  const active = username && password && email;
-
   return (
     <>
-      <BackButton setter={setter} />
+      <BackButton onClick={() => setter('undecided')} />
       <h2>Create a new account:</h2>
       <FormGroup
         label='Username'
@@ -93,111 +170,11 @@ function RegisterForm({ setter }: ChoiceFormProps) {
         setter={setPassword}
         reference={passwordRef}
       />
-      <button
-        className={`${
-          active ? 'bg-gray-500' : 'bg-gray-300'
-        } block m-auto my-2 bg-gray-500 w-fit text-3xl px-4 py-2 rounded-xl`}
-        onClick={submitForm}
-        disabled={!active}
-      >
-        Submit
-      </button>
-    </>
-  );
-}
-
-function LoginForm({ setter }: ChoiceFormProps) {
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-
-  const usernameRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
-  const passwordRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
-
-  // useEffect(() => {
-  //   usernameRef.current?.blur();
-  //   passwordRef.current?.blur();
-  // }, []);
-
-  const navigate = useNavigate();
-
-  async function submitForm(): Promise<void> {
-    usernameRef.current?.blur();
-    passwordRef.current?.blur();
-    const login = await attemptPlayerLogin(username, password);
-    switch (login.status) {
-      case 200: {
-        const { token } = login.body as TokenResponse;
-        console.log(token);
-        sessionStorage.setItem('token', token);
-        navigate('/');
-        break;
-      }
-      default: {
-        const { message } = login.body as MessageResponse;
-        console.log(message);
-      }
-    }
-  }
-
-  const active = username && password;
-  return (
-    <>
-      <BackButton setter={setter} />
-      <h2>Log into your account:</h2>
-      <FormGroup
-        label='Username'
-        setter={setUsername}
-        reference={usernameRef}
+      <MenuButton
+        text='Submit'
+        onClick={() => submitForm()}
+        disabled={!(username && password && email)}
       />
-      <FormGroup
-        label='Password'
-        type='password'
-        setter={setPassword}
-        reference={passwordRef}
-      />
-      <button
-        className={`${
-          active ? 'bg-gray-500' : 'bg-gray-300'
-        } block m-auto my-2 bg-gray-500 w-fit text-3xl px-4 py-2 rounded-xl`}
-        onClick={submitForm}
-        disabled={!active}
-      >
-        Submit
-      </button>
     </>
-  );
-}
-
-function BackButton({ setter }: ChoiceFormProps) {
-  return (
-    <button
-      className='block m-4 my-2 bg-gray-500 w-fit text-3xl px-4 py-2 rounded-xl'
-      onClick={() => setter('undecided')}
-    >
-      {'<'}
-    </button>
-  );
-}
-
-type ChoiceFormProps = {
-  setter: React.Dispatch<React.SetStateAction<UserChoice>>;
-};
-
-function ChoiceForm({ setter }: ChoiceFormProps) {
-  return (
-    <div className='flex flex-col items-center'>
-      <button
-        className='bg-gray-500 w-fit p-2 rounded-xl m-2'
-        onClick={() => setter('login')}
-      >
-        Log in
-      </button>
-      <button
-        className='bg-gray-500 w-fit p-2 rounded-xl m-2'
-        onClick={() => setter('register')}
-      >
-        Create account
-      </button>
-    </div>
   );
 }
