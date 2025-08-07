@@ -8,7 +8,7 @@ import type { BalanceResponse } from '../request/api_response';
 export default function HomePage() {
   const homeInfo = useLoaderData() as HomeInfo;
 
-  const [player, setPlayer] = useState(homeInfo.player);
+  const [player] = useState(homeInfo.player);
   const [balance, setBalance] = useState(homeInfo.balance);
   const [bonus, setBonus] = useState(homeInfo.bonus);
 
