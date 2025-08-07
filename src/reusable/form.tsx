@@ -1,12 +1,25 @@
 import { useState } from 'react';
 
 type FormGroupProps = {
+  /** The label for the input field. */
   label: string;
+  /** The placeholder value in the input field. */
   hint?: string;
+  /**
+   * The number of rows in the field. 1 (default) creates an `input` field;
+   * greater than 1 creates a `textarea`.
+   */
   rows?: number;
+  /**
+   * The type of the input field. Only important if `rows === 1`. Critical for
+   * password fields.
+   */
   type?: string;
+  /** A function to set the state variable. */
   setter: React.Dispatch<React.SetStateAction<string>>;
+  /** A function to automatically format the input within the field as you type. */
   formatter?: (s: string) => string;
+  /** A function to ensure valid input when the field leaves focus. */
   validator?: (s: string) => boolean;
   reference: React.RefObject<HTMLInputElement | HTMLTextAreaElement | null>;
 };
@@ -25,8 +38,8 @@ export function FormGroup({
 
   type Border = 'normal' | 'invalid';
   const BORDER_CLASSES = {
-    normal: 'border-[var(--dark-green)] border-1',
-    invalid: 'border-[var(--dark-red)] border-2'
+    normal: 'border-foreground border-1',
+    invalid: 'border-accent border-2'
   };
 
   const [border, setBorder] = useState<Border>('normal');
@@ -42,7 +55,7 @@ export function FormGroup({
   ) => {
     const { value } = event.target;
     const valid = validator(value);
-    if (valid || !(valid || value)) {
+    if (valid || !value) {
       // Either the field is empty, or the value inside is valid.
       setter(value);
       setBorder('normal');
@@ -50,7 +63,7 @@ export function FormGroup({
       // The value is invalid! Highlight the field to reflect that,
       // and set the state variable to the empty string.
       setter('');
-      setBorder('normal');
+      setBorder('invalid');
     }
   };
 
@@ -59,7 +72,7 @@ export function FormGroup({
       id={id}
       name={id}
       placeholder={hint}
-      className={`${BORDER_CLASSES[border]} w-1/1 resize-none`}
+      className={`${BORDER_CLASSES[border]} w-1/1 resize-none text-2xl`}
       onBlur={validateInput}
       onChange={formatInput}
       rows={rows}
@@ -73,7 +86,7 @@ export function FormGroup({
       id={id}
       name={id}
       placeholder={hint}
-      className={`${BORDER_CLASSES[border]} w-[400px]`}
+      className={`${BORDER_CLASSES[border]} w-[400px] text-2xl`}
       onBlur={validateInput}
       onChange={formatInput}
       ref={reference as React.RefObject<HTMLInputElement>}
@@ -87,7 +100,7 @@ export function FormGroup({
 
   return (
     <div className={`${flex} justify-between m-2 flex-wrap`}>
-      <label htmlFor={id} className='pr-2'>
+      <label htmlFor={id} className='text-2xl mr-2'>
         {label}
       </label>
       {field}
