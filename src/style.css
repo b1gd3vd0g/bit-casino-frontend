@@ -5,6 +5,14 @@
   src: url('./assets/font/vt323/VT323-Regular.ttf') format('truetype');
 }
 
+@theme {
+  --color-background: #0a0a0a;
+  --color-foreground: oklch(69.6% 0.17 162.48);
+  --color-accent: #e12afb;
+
+  --font-vt: 'vt323', monospace;
+}
+
 @layer base {
   h1 {
     @apply text-5xl text-center;
