@@ -1,6 +1,6 @@
 import type { ApiResponse, BalanceResponse } from './api_response';
 
-const api_base = '/currency/';
+const api_base = '/currency';
 
 export async function attemptFetchPlayerBalance(
   token: string

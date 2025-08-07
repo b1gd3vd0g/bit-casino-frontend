@@ -4,7 +4,7 @@ import type {
   TokenResponse
 } from './api_response';
 
-const api_base = '/player/';
+const api_base = '/player';
 
 export async function attemptPlayerRegistration(
   username: string,
@@ -26,7 +26,7 @@ export async function attemptPlayerLogin(
   username: string,
   password: string
 ): Promise<ApiResponse<TokenResponse>> {
-  const response = await fetch(`${api_base}authn`, {
+  const response = await fetch(`${api_base}/authn`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ export async function attemptPlayerLogin(
 export async function attemptTokenAuthentication(
   token: string
 ): Promise<ApiResponse<PlayerResponse>> {
-  const response = await fetch(`${api_base}authn`, {
+  const response = await fetch(`${api_base}/authn`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`

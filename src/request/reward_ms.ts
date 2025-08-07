@@ -4,7 +4,7 @@ import type {
   StreakResponse
 } from './api_response';
 
-const api_base = '/reward/';
+const api_base = '/reward';
 
 export async function attemptCheckDailyBonus(
   token: string
