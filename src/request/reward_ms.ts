@@ -9,7 +9,7 @@ const api_base = '/reward';
 export async function attemptCheckDailyBonus(
   token: string
 ): Promise<ApiResponse<BonusResponse>> {
-  const response = await fetch(api_base, {
+  const response = await fetch(`${api_base}/`, {
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json'
@@ -22,7 +22,7 @@ export async function attemptCheckDailyBonus(
 export async function attemptClaimDailyBonus(
   token: string
 ): Promise<ApiResponse<StreakResponse>> {
-  const response = await fetch(api_base, {
+  const response = await fetch(`${api_base}/`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,

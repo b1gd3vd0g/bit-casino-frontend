@@ -11,7 +11,7 @@ export async function attemptPlayerRegistration(
   email: string,
   password: string
 ): Promise<ApiResponse<TokenResponse>> {
-  const response = await fetch(api_base, {
+  const response = await fetch(`${api_base}/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
