@@ -66,3 +66,19 @@ export async function attemptTokenAuthentication(
   const body = await response.json();
   return { status: response.status, body };
 }
+
+export async function attemptPlayerDeletion(
+  token: string
+): Promise<ApiResponse<null>> {
+  if (import.meta.env.DEV) {
+    return { status: 204, body: null };
+  }
+  const response = await fetch(`${api_base}/`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  });
+  const body = await response.json();
+  return { status: response.status, body };
+}
