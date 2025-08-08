@@ -24,6 +24,9 @@ export async function attemptCheckDailyBonus(
 export async function attemptClaimDailyBonus(
   token: string
 ): Promise<ApiResponse<StreakResponse>> {
+  if (import.meta.env.DEV) {
+    return { status: 200, body: { streak: 2 } };
+  }
   const response = await fetch(`${api_base}/daily`, {
     method: 'POST',
     headers: {
