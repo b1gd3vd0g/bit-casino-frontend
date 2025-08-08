@@ -8,6 +8,7 @@ import type { MessageResponse, TokenResponse } from '../request/api_response';
 import { useNavigate } from 'react-router-dom';
 import TypingText from '../reusable/text';
 import { BackButton, MenuButton } from '../reusable/buttons';
+import Box from '../reusable/box';
 
 type UserChoice = 'undecided' | 'login' | 'register';
 
@@ -33,9 +34,7 @@ export default function WelcomePage() {
   return (
     <div className='min-h-screen flex flex-col justify-center items-center '>
       <TypingText text='Welcome to Bit Casino!' cps={10} />
-      <div className='w-[750px] max-w-9/10 mx-auto my-5 p-2 border-foreground border-2'>
-        {form}
-      </div>
+      <Box>{form}</Box>
     </div>
   );
 }
