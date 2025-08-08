@@ -11,13 +11,15 @@ interface ButtonProps {
   disabled?: boolean;
   /** Should the button be centered? (Default: true) */
   center?: boolean;
+  className?: string;
 }
 
 export function MenuButton({
   onClick,
   text,
   disabled = false,
-  center = true
+  center = true,
+  className = ''
 }: ButtonProps): React.ReactElement {
   const playSfx = useSound(chips1);
 
@@ -26,7 +28,7 @@ export function MenuButton({
 
   return (
     <button
-      className={`block border-1 text-2xl py-2 px-5 my-2 ${mx} ${colorChoices}`}
+      className={`block border-1 text-2xl py-2 px-5 my-2 ${mx} ${colorChoices} ${className}`}
       onClick={() => {
         onClick();
         playSfx();
