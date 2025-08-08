@@ -72,7 +72,7 @@ export function FormGroup({
       id={id}
       name={id}
       placeholder={hint}
-      className={`${BORDER_CLASSES[border]} w-1/1 resize-none text-2xl`}
+      className={`${BORDER_CLASSES[border]} w-1/1 resize-none text-2xl p-1`}
       onBlur={validateInput}
       onChange={formatInput}
       rows={rows}
@@ -86,7 +86,7 @@ export function FormGroup({
       id={id}
       name={id}
       placeholder={hint}
-      className={`${BORDER_CLASSES[border]} w-[400px] text-2xl`}
+      className={`${BORDER_CLASSES[border]} w-[400px] text-2xl/normal py-1 px-3`}
       onBlur={validateInput}
       onChange={formatInput}
       ref={reference as React.RefObject<HTMLInputElement>}
