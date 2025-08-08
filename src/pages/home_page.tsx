@@ -6,6 +6,7 @@ import { attemptFetchPlayerBalance } from '../request/currency_ms';
 import type { BalanceResponse } from '../request/api_response';
 
 import profileIcon from '../assets/img/profile_icon.png';
+import TypingText from '../reusable/text';
 
 export default function HomePage() {
   const homeInfo = useLoaderData() as HomeInfo;
@@ -31,7 +32,7 @@ export default function HomePage() {
   return (
     <>
       <img src={profileIcon} className='float-right' />
-      <h1>Welcome, {player.username}</h1>
+      <TypingText text={`Welcome, ${player.username}`} />
       <h2>Current Balance: {balance}</h2>
       <h3>Daily bonus is {bonus.available ? 'available' : 'unavailable'}</h3>
       <h4>Current streak is {bonus.streak}</h4>
