@@ -18,7 +18,7 @@
     @apply text-5xl text-center;
   }
   h2 {
-    @apply text-3xl text-center underline;
+    @apply text-3xl text-center;
   }
 
   img,
