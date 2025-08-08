@@ -1,30 +1,18 @@
-import { type HomeInfo } from '../loaders';
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { attemptClaimDailyBonus } from '../util/request/reward_ms';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { attemptFetchPlayerBalance } from '../util/request/currency_ms';
-import type {
-  BalanceResponse,
-  BonusResponse
-} from '../util/request/api_response';
-
-import profileIconStd from '../assets/img/profile_icon.png';
-import profileIconHov from '../assets/img/profile_icon_hover.png';
-import flame from '../assets/img/flame.png';
-import bitSymbol from '../assets/img/bit_symbol.png';
+import type { BalanceResponse } from '../util/request/api_response';
 import TypingText from '../reusable/text';
 import { MenuButton } from '../reusable/buttons';
-import { attemptPlayerDeletion } from '../util/request/player_ms';
 import { timeTillNewUtcDay } from '../util/time';
+import { AccountContext, type AccountContextData } from '../util/context';
 
 export default function HomePage() {
-  const homeInfo = useLoaderData() as HomeInfo;
-
-  const [player] = useState(homeInfo.player);
-  const [balance, setBalance] = useState(homeInfo.balance);
-  const [bonus, setBonus] = useState(homeInfo.bonus);
   const [remaining, setRemaining] = useState(timeTillNewUtcDay());
 
+  const ctx = useContext(AccountContext) as AccountContextData;
+  const { account, setAccount } = ctx;
   useEffect(() => {
     const timeout = setTimeout(() => setRemaining((prev) => prev - 1), 1_000);
     return () => clearTimeout(timeout);
@@ -37,10 +25,12 @@ export default function HomePage() {
       return;
     }
     const newBal = await attemptFetchPlayerBalance(token);
-    setBalance((newBal.body as BalanceResponse).balance);
-    setBonus({
-      streak: bonus.streak + 1,
-      available: false
+    setAccount((prev) => {
+      return {
+        ...prev,
+        balance: (newBal.body as BalanceResponse).balance,
+        bonus: { streak: prev.bonus.streak + 1, available: false }
+      };
     });
   };
 
@@ -50,94 +40,39 @@ export default function HomePage() {
 
   return (
     <div className='min-h-screen flex flex-col'>
-      <div className='flex justify-between items-center p-2'>
-        <h1>Bit Casino</h1>
-        <ProfileHeaderBox balance={balance} bonus={bonus} />
-      </div>
-      <div className='grow-2 flex flex-col justify-center'>
-        <TypingText text={`Welcome, ${player.username}`} />
-        <MenuButton
-          text='Claim Daily Bonus'
-          onClick={claimDailyBonus}
-          disabled={!bonus.available}
-        />
-        <p className='text-xl text-center'>
-          {hours}:{minutes}:{seconds}
-          {bonus.available ? ' left to claim' : ' until next bonus'}.
-        </p>
+      <div className='flex flex-col justify-evenly grow-2'>
+        <div>
+          <TypingText text={`Welcome, ${account.player.username}`} />
+          <MenuButton
+            text='Claim Daily Bonus'
+            onClick={claimDailyBonus}
+            disabled={!account.bonus.available}
+          />
+          <p className='text-xl text-center'>
+            {hours}:{minutes}:{seconds}
+            {account.bonus.available ? ' left to claim' : ' until next bonus'}.
+          </p>
+        </div>
+        <GameMenu />
       </div>
     </div>
   );
 }
 
-interface ProfileHeaderBoxProps {
-  balance: number;
-  bonus: BonusResponse;
-}
-
-function ProfileHeaderBox({ balance, bonus }: ProfileHeaderBoxProps) {
-  const [popup, setPopup] = useState(false);
-
-  return (
-    <div className='flex flex-col'>
-      <div className='flex items-center'>
-        <img src={bitSymbol} className='h-8 w-8' />
-        <h2 className='pl-1 pr-2'>{balance}</h2>
-        <img src={flame} className='h-8 w-8' />
-        <h2 className='pl-1 pr-2'>{bonus.streak}</h2>
-        <ProfileIcon setPopup={setPopup} />
-      </div>
-      {popup ? <ProfilePopup /> : <></>}
-    </div>
-  );
-}
-
-interface ProfileIconProps {
-  setPopup: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-function ProfileIcon({ setPopup }: ProfileIconProps) {
-  const [hover, setHover] = useState(false);
-
-  return (
-    <img
-      src={hover ? profileIconHov : profileIconStd}
-      className='h-12 w-12'
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      onClick={() => setPopup((prev) => !prev)}
-    />
-  );
-}
-
-function ProfilePopup() {
+function GameMenu() {
   const navigate = useNavigate();
-  function signOut() {
-    sessionStorage.removeItem('token');
-    navigate('/welcome');
-  }
-
-  async function deleteAccount() {
-    const deletion = await attemptPlayerDeletion(
-      sessionStorage.getItem('token') ?? ''
-    );
-    console.log(deletion);
-    switch (deletion.status) {
-      case 204: {
-        sessionStorage.removeItem('token');
-        navigate('/welcome');
-        break;
-      }
-      default: {
-        console.log('Could not delete account.');
-      }
-    }
-  }
-
   return (
-    <div className='border-2 mr-2 my-2 py-2 px-5'>
-      <MenuButton text='Sign out' onClick={signOut} />
-      <MenuButton text='Delete account' onClick={deleteAccount} />
+    <div>
+      <h2>Select a game to play</h2>
+      <div className='border-2 p-4 m-2 w-[750px] max-w-9/10 mx-auto flex justify-evenly'>
+        <MenuButton
+          text='Slots'
+          onClick={() => {
+            navigate('/slots/byte_builder');
+          }}
+        />
+        <MenuButton text='Poker' onClick={() => {}} disabled={true} />
+      </div>
     </div>
   );
 }
