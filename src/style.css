@@ -7,7 +7,7 @@
 
 @theme {
   --color-background: #0a0a0a;
-  --color-foreground: oklch(69.6% 0.17 162.48);
+  --color-foreground: #00ff99;
   --color-accent: #e12afb;
 
   --font-vt: 'vt323', monospace;
@@ -19,6 +19,11 @@
   }
   h2 {
     @apply text-3xl text-center underline;
+  }
+
+  img,
+  canvas {
+    @apply [image-rendering:pixelated];
   }
 }
 

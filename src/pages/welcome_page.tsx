@@ -31,9 +31,9 @@ export default function WelcomePage() {
       break;
   }
   return (
-    <div>
+    <div className='min-h-screen flex flex-col justify-center items-center '>
       <TypingText text='Welcome to Bit Casino!' cps={10} />
-      <div className='w-[750px] max-w-9/10 m-auto p-2 border-emerald-400 border-2'>
+      <div className='w-[750px] max-w-9/10 mx-auto my-5 p-2 border-foreground border-2'>
         {form}
       </div>
     </div>
