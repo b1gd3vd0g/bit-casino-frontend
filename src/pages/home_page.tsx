@@ -31,17 +31,22 @@ export default function HomePage() {
   };
 
   return (
-    <>
-      <img src={profileIcon} className='float-right m-4 h-20 w-20' />
-      <TypingText text={`Welcome, ${player.username}`} />
-      <h2>Current Balance: {balance}</h2>
-      <h3>Daily bonus is {bonus.available ? 'available' : 'unavailable'}</h3>
-      <h4>Current streak is {bonus.streak}</h4>
-      <MenuButton
-        text='Claim Daily Bonus'
-        onClick={claimDailyBonus}
-        disabled={!bonus.available}
-      />
-    </>
+    <div className='min-h-screen flex flex-col'>
+      <div className='flex justify-between items-center p-2'>
+        <h1>Bit Casino</h1>
+        <img src={profileIcon} className='h-12 w-12' />
+      </div>
+      <div className='grow-2 flex flex-col justify-center'>
+        <TypingText text={`Welcome, ${player.username}`} />
+        <h2>Current Balance: {balance}</h2>
+        <h3>Daily bonus is {bonus.available ? 'available' : 'unavailable'}</h3>
+        <h4>Current streak is {bonus.streak}</h4>
+        <MenuButton
+          text='Claim Daily Bonus'
+          onClick={claimDailyBonus}
+          disabled={!bonus.available}
+        />
+      </div>
+    </div>
   );
 }
