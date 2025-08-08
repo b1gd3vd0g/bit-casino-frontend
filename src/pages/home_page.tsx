@@ -38,14 +38,13 @@ export default function HomePage() {
       </div>
       <div className='grow-2 flex flex-col justify-center'>
         <TypingText text={`Welcome, ${player.username}`} />
-        <h2>Current Balance: {balance}</h2>
-        <h3>Daily bonus is {bonus.available ? 'available' : 'unavailable'}</h3>
-        <h4>Current streak is {bonus.streak}</h4>
+        <h2>Current Balance: {balance} bits</h2>
         <MenuButton
           text='Claim Daily Bonus'
           onClick={claimDailyBonus}
           disabled={!bonus.available}
         />
+        <h2 className='no-underline'>Streak: {bonus.streak}</h2>
       </div>
     </div>
   );
