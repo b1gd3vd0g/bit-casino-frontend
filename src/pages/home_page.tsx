@@ -42,13 +42,11 @@ export default function HomePage() {
       </div>
       <div className='grow-2 flex flex-col justify-center'>
         <TypingText text={`Welcome, ${player.username}`} />
-        <h2>Current Balance: {balance} bits</h2>
         <MenuButton
           text='Claim Daily Bonus'
           onClick={claimDailyBonus}
           disabled={!bonus.available}
         />
-        <h2>Streak: {bonus.streak}</h2>
       </div>
     </div>
   );
