@@ -1,9 +1,12 @@
 import { type HomeInfo } from '../loaders';
 import { useLoaderData, useNavigate } from 'react-router-dom';
-import { attemptClaimDailyBonus } from '../request/reward_ms';
+import { attemptClaimDailyBonus } from '../util/request/reward_ms';
 import { useState } from 'react';
-import { attemptFetchPlayerBalance } from '../request/currency_ms';
-import type { BalanceResponse, BonusResponse } from '../request/api_response';
+import { attemptFetchPlayerBalance } from '../util/request/currency_ms';
+import type {
+  BalanceResponse,
+  BonusResponse
+} from '../util/request/api_response';
 
 import profileIconStd from '../assets/img/profile_icon.png';
 import profileIconHov from '../assets/img/profile_icon_hover.png';
@@ -11,7 +14,7 @@ import flame from '../assets/img/flame.png';
 import bitSymbol from '../assets/img/bit_symbol.png';
 import TypingText from '../reusable/text';
 import { MenuButton } from '../reusable/buttons';
-import { attemptPlayerDeletion } from '../request/player_ms';
+import { attemptPlayerDeletion } from '../util/request/player_ms';
 
 export default function HomePage() {
   const homeInfo = useLoaderData() as HomeInfo;

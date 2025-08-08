@@ -3,8 +3,11 @@ import { FormGroup } from '../reusable/form';
 import {
   attemptPlayerLogin,
   attemptPlayerRegistration
-} from '../request/player_ms';
-import type { MessageResponse, TokenResponse } from '../request/api_response';
+} from '../util/request/player_ms';
+import type {
+  MessageResponse,
+  TokenResponse
+} from '../util/request/api_response';
 import { useNavigate } from 'react-router-dom';
 import TypingText from '../reusable/text';
 import { BackButton, MenuButton } from '../reusable/buttons';

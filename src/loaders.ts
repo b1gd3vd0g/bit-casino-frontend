@@ -1,12 +1,12 @@
 import { redirect } from 'react-router-dom';
-import { attemptTokenAuthentication } from './request/player_ms';
+import { attemptTokenAuthentication } from './util/request/player_ms';
 import type {
   BalanceResponse,
   BonusResponse,
   PlayerResponse
-} from './request/api_response';
-import { attemptFetchPlayerBalance } from './request/currency_ms';
-import { attemptCheckDailyBonus } from './request/reward_ms';
+} from './util/request/api_response';
+import { attemptFetchPlayerBalance } from './util/request/currency_ms';
+import { attemptCheckDailyBonus } from './util/request/reward_ms';
 
 export interface HomeInfo {
   player: PlayerResponse;
