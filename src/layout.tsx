@@ -3,9 +3,9 @@ import Header from './header';
 
 export function LayoutWithHeader() {
   return (
-    <div className='bg-background font-vt text-foreground'>
+    <div className='bg-background font-vt text-foreground min-h-screen'>
       <Header />
-      <main className='min-h-screen'>
+      <main>
         <Outlet />
       </main>
     </div>
