@@ -1,7 +1,7 @@
 # Bit Casino -- Frontend
 
 > [!NOTE]
-> **This app is under active development**
+> This app is under active development
 
 A **React** application written in **TypeScript** serving as the frontend for **Bit Casino** - a virtual gambling simulator. The app is containerized using **Docker**.
 
@@ -15,9 +15,7 @@ cd bit-casino-frontend
 npm run dev
 ```
 
----
-
-To run the entire Bit Casino ecosystem locally, follow the instructions in the [Infrastructure](https://github.com/b1gd3vd0g/bit-casino-infra) repository to run the entire system locally using **Docker Compose**.
+Better yet, to run the entire Bit Casino ecosystem locally, follow the instructions in the [Infrastructure](https://github.com/b1gd3vd0g/bit-casino-infra) repository to run the entire system locally using **Docker Compose**.
 
 ## Functionality
 
