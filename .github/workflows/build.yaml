@@ -1,0 +1,26 @@
+name: Build and containerize
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-dockerize:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Set up node.js
+        uses: actions/setup-node@v3
+      - name: Install deps
+        run: npm ci
+      - name: Build app
+        run: npm run build
+      - name: Build docker image
+        run: |
+          docker build -t bit-casino-player-ms:latest .
