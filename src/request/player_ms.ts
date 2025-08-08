@@ -74,6 +74,7 @@ export async function attemptPlayerDeletion(
     return { status: 204, body: null };
   }
   const response = await fetch(`${api_base}/`, {
+    method: 'delete',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
