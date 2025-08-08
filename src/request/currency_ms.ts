@@ -5,6 +5,12 @@ const api_base = '/currency';
 export async function attemptFetchPlayerBalance(
   token: string
 ): Promise<ApiResponse<BalanceResponse>> {
+  if (import.meta.env.DEV) {
+    return {
+      status: 200,
+      body: { balance: 1024 }
+    };
+  }
   const response = await fetch(`${api_base}/`, {
     headers: {
       Authorization: `Bearer ${token}`,
