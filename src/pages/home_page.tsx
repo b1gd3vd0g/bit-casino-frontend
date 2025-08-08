@@ -44,9 +44,9 @@ export default function HomePage() {
     });
   };
 
-  const hours = `${Math.floor(remaining / 3600)}`.padStart(2, '0');
-  const minutes = `${Math.floor((remaining % 60) / 60)}`.padStart(2, '0');
-  const seconds = `${Math.floor(remaining % 60)}`.padStart(2, '0');
+  const hours = `${Math.floor(remaining / 3600) - 1}`.padStart(2, '0');
+  const minutes = `${(Math.floor(remaining / 60) % 60) - 1}`.padStart(2, '0');
+  const seconds = `${remaining % 60}`.padStart(2, '0');
 
   return (
     <div className='min-h-screen flex flex-col'>
