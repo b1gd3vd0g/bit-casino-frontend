@@ -1,7 +1,7 @@
 import { type HomeInfo } from '../loaders';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { attemptClaimDailyBonus } from '../util/request/reward_ms';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { attemptFetchPlayerBalance } from '../util/request/currency_ms';
 import type {
   BalanceResponse,
@@ -15,6 +15,7 @@ import bitSymbol from '../assets/img/bit_symbol.png';
 import TypingText from '../reusable/text';
 import { MenuButton } from '../reusable/buttons';
 import { attemptPlayerDeletion } from '../util/request/player_ms';
+import { timeTillNewUtcDay } from '../util/time';
 
 export default function HomePage() {
   const homeInfo = useLoaderData() as HomeInfo;
@@ -22,6 +23,12 @@ export default function HomePage() {
   const [player] = useState(homeInfo.player);
   const [balance, setBalance] = useState(homeInfo.balance);
   const [bonus, setBonus] = useState(homeInfo.bonus);
+  const [remaining, setRemaining] = useState(timeTillNewUtcDay());
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setRemaining((prev) => prev - 1), 1_000);
+    return () => clearTimeout(timeout);
+  });
 
   const claimDailyBonus = async () => {
     const token = sessionStorage.getItem('token') ?? '';
@@ -37,6 +44,10 @@ export default function HomePage() {
     });
   };
 
+  const hours = `${Math.floor(remaining / 3600)}`.padStart(2, '0');
+  const minutes = `${Math.floor((remaining % 60) / 60)}`.padStart(2, '0');
+  const seconds = `${Math.floor(remaining % 60)}`.padStart(2, '0');
+
   return (
     <div className='min-h-screen flex flex-col'>
       <div className='flex justify-between items-center p-2'>
@@ -50,6 +61,10 @@ export default function HomePage() {
           onClick={claimDailyBonus}
           disabled={!bonus.available}
         />
+        <p className='text-xl text-center'>
+          {hours}:{minutes}:{seconds}
+          {bonus.available ? ' left to claim' : ' until next bonus'}.
+        </p>
       </div>
     </div>
   );
