@@ -80,6 +80,6 @@ export async function attemptPlayerDeletion(
       Authorization: `Bearer ${token}`
     }
   });
-  const body = await response.json();
+  const body = response.status === 204 ? null : await response.json();
   return { status: response.status, body };
 }
