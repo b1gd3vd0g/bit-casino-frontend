@@ -59,6 +59,10 @@ function Machine() {
         setPayout((spin.body as ByteBuilderResponse).payout);
         setAccount({
           ...account,
+          balance: (spin.body as ByteBuilderResponse).balance
+        });
+        setAccount({
+          ...account,
           balance: balance + payout
         });
     }

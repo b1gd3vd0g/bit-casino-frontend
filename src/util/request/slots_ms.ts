@@ -6,6 +6,7 @@ export interface ByteBuilderResponse {
   payout: number;
   byte: string;
   event: string | null;
+  balance: number;
 }
 
 export async function attemptSpinByteBuilder(
