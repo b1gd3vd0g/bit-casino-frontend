@@ -40,6 +40,9 @@ function Machine() {
     }, Math.random() * 1000 + 1000);
   }, [spinning]);
 
+  useEffect(() => console.log(byte), [byte]);
+  useEffect(() => console.log(payout), [payout]);
+
   /**
    * Call the backend to spin the machine and set its state to reflect the HTTP
    * response.
