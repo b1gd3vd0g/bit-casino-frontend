@@ -4,7 +4,7 @@ import type {
   TokenResponse
 } from './api_response';
 
-const api_base = '/player';
+const api_base = '/player-ms';
 
 export async function attemptPlayerRegistration(
   username: string,
