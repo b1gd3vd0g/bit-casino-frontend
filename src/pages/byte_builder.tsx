@@ -20,6 +20,10 @@ export default function ByteBuilder() {
  * is also the source of its state.
  */
 function Machine() {
+  const ctx = useContext(AccountContext) as AccountContextData;
+  const { account, setAccount } = ctx;
+  const { balance } = account;
+
   /** The result of spinning the machine; the byte displayed on the screen. */
   const [byte, setByte] = useState('0000 0000');
   /** The multiplier for the wager and the payout. */
@@ -50,6 +54,10 @@ function Machine() {
       case 200:
         setByte((spin.body as ByteBuilderResponse).byte);
         setPayout((spin.body as ByteBuilderResponse).payout * multiplier);
+        setAccount({
+          ...account,
+          balance: balance + payout
+        });
     }
   }
 
@@ -211,7 +219,7 @@ function SpinSide({ multiplier, onClick, payout }: SpinSideProps) {
     <div className='flex flex-col w-1/2 px-5'>
       <div className='border-1 px-5 py-2'>
         <p className='text-2xl text-right'>
-          {payout === undefined ? '---' : payout * multiplier}
+          {payout === undefined ? '---' : payout}
         </p>
       </div>
       <MenuButton
