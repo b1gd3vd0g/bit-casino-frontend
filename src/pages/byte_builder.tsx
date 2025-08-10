@@ -56,7 +56,7 @@ function Machine() {
     switch (spin.status) {
       case 200:
         setByte((spin.body as ByteBuilderResponse).byte);
-        setPayout((spin.body as ByteBuilderResponse).payout * multiplier);
+        setPayout((spin.body as ByteBuilderResponse).payout);
         setAccount({
           ...account,
           balance: balance + payout
@@ -191,7 +191,7 @@ function WagerSide({ multiplier, setMultiplier }: WagerSideProps) {
         <MenuButton
           text='+'
           onClick={() => setMultiplier(multiplier * 2)}
-          disabled={balance < 128 * (2 * multiplier)}
+          disabled={balance < 256 * multiplier}
           center={false}
         />
       </div>
