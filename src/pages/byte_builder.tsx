@@ -22,7 +22,6 @@ export default function ByteBuilder() {
 function Machine() {
   const ctx = useContext(AccountContext) as AccountContextData;
   const { account, setAccount } = ctx;
-  const { balance } = account;
 
   /** The result of spinning the machine; the byte displayed on the screen. */
   const [byte, setByte] = useState('0000 0000');
