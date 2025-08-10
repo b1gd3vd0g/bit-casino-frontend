@@ -16,7 +16,7 @@ export async function attemptSpinByteBuilder(
   if (import.meta.env.DEV)
     return {
       status: 200,
-      body: { payout: 78, byte: '0100 1110', event: null }
+      body: { payout: 78, byte: '0100 1110', event: null, balance: 1024 }
     };
   const response = await fetch(`${api_base}/byte_builder`, {
     method: 'POST',
